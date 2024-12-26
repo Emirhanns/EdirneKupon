@@ -20,12 +20,14 @@ app.register_blueprint(admin_routes)
 
 # React yönlendirmelerini desteklemek için catch-all route
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
+@app.route('/')
+def index():
     return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:path>')
+def static_files(path):
+    return send_from_directory(os.path.join(app.static_folder, 'static'), path)
+
 
 
 app.config['DEBUG'] = False  # Debug özelliğini kapat
