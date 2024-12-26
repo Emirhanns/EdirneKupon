@@ -11,7 +11,7 @@ const Restoran = () => {
   // Restoran kuponlarını API'den çekme
   const fetchKuponlar = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/get_kuponlar/${restoranId}`);
+      const response = await axios.get(`https://edirnekupon-back.onrender.com/get_kuponlar/${restoranId}`);
       setKuponlar(response.data);
     } catch (err) {
       console.error("Kuponlar yüklenirken hata oluştu:", err);
@@ -39,7 +39,7 @@ const Restoran = () => {
 
       try {
         // Kuponu silmek için API çağrısı
-        await axios.delete(`http://127.0.0.1:5000/delete_kupon/${kupon._id}`);
+        await axios.delete(`https://edirnekupon-back.onrender.com/delete_kupon/${kupon._id}`);
         setMessage("Kuponunuz geçerli!"); // Geçerli kupon mesajı
 
         // Kupon listesini güncelle
