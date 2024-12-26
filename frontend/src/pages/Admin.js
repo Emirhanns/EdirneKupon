@@ -33,7 +33,7 @@ const Admin = () => {
   const handleUserSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:5000/add_user", newUser)
+      .post("https://edirnekupon-back.onrender.com/add_user", newUser)
       .then(() => {
         setMessage("Kullanıcı başarıyla oluşturuldu.");
         setNewUser({ username: "", password: "", role: "user", restoranId: "" });
@@ -47,7 +47,7 @@ const Admin = () => {
   const handleRestoranSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:5000/add_restoran", newRestoran)
+      .post("https://edirnekupon-back.onrender.com/add_restoran", newRestoran)
       .then(() => {
         setMessage("Restoran başarıyla eklendi.");
         setNewRestoran({ restoranName: "" });
@@ -61,7 +61,7 @@ const Admin = () => {
   const handleKuponSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:5000/add_kupon", {
+      .post("https://edirnekupon-back.onrender.com/add_kupon", {
         restoranId: newKupon.restoranId,
         kuponName: newKupon.kuponName,
         indirimDegeri: parseFloat(newKupon.indirimDegeri),
