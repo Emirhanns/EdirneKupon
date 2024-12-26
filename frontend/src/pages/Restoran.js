@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "../styles/Restoran.css"; // CSS dosyasını ekleyin
 
@@ -9,25 +9,24 @@ const Restoran = () => {
   const restoranId = localStorage.getItem("restoranId"); // Giriş yapan kullanıcının restoran ID'si
 
   // Restoran kuponlarını API'den çekme
-  const fetchKuponlar = async () => {
+  const fetchKuponlar = useCallback(async () => {
     try {
       const response = await axios.get(`https://edirnekupon-back.onrender.com/get_kuponlar/${restoranId}`);
       setKuponlar(response.data);
     } catch (err) {
       console.error("Kuponlar yüklenirken hata oluştu:", err);
     }
-  };
+  }, [restoranId]); // restoranId bağımlılık olarak ekleniyor
 
   // İlk yüklemede kuponları çek
   useEffect(() => {
     fetchKuponlar();
-  }, []);
+  }, [fetchKuponlar]); // fetchKuponlar bağımlılıklar listesinde
 
   // Kupon doğrulama ve silme
   const handleKuponSubmit = async (e) => {
     e.preventDefault();
 
-    // Kuponu adıyla buluyoruz
     const kupon = kuponlar.find((k) => k.kuponName === kuponInput);
 
     if (kupon) {
@@ -38,12 +37,9 @@ const Restoran = () => {
       }
 
       try {
-        // Kuponu silmek için API çağrısı
         await axios.delete(`https://edirnekupon-back.onrender.com/delete_kupon/${kupon._id}`);
         setMessage("Kuponunuz geçerli!"); // Geçerli kupon mesajı
-
-        // Kupon listesini güncelle
-        setKuponlar(kuponlar.filter((k) => k._id !== kupon._id));
+        setKuponlar((prevKuponlar) => prevKuponlar.filter((k) => k._id !== kupon._id));
       } catch (err) {
         console.error("Kupon silinirken hata oluştu:", err);
         setMessage("Kupon doğrulama sırasında hata oluştu.");
