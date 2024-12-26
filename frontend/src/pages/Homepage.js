@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/get_restoranlar");
+        const response = await axios.get("https://edirnekupon-back.onrender.com/get_restoranlar");
         if (response.status === 200) {
           setRestaurants(response.data);
         } else {
@@ -37,7 +37,7 @@ const HomePage = () => {
   // OTP gönderme fonksiyonu
   const handleSendOtp = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:5000/send_otp", {
+      const response = await axios.post("https://edirnekupon-back.onrender.com/send_otp", {
         email: gmail,
       });
       if (response.data.success) {
@@ -55,7 +55,7 @@ const HomePage = () => {
   // OTP doğrulama fonksiyonu
   const handleVerifyOtp = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:5000/verify_otp", {
+      const response = await axios.post("https://edirnekupon-back.onrender.com/verify_otp", {
         email: gmail,
         otp,
       });
@@ -77,7 +77,7 @@ const HomePage = () => {
   const fetchKupon = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:5000/get_random_kupon/${selectedRestaurant}`
+        `https://edirnekupon-back.onrender.com/get_random_kupon/${selectedRestaurant}`
       );
       if (response.data.success) {
         setKupon(response.data.kupon);
