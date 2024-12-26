@@ -7,7 +7,7 @@ from routes.auth_routes import auth_routes
 from routes.admin_routes import admin_routes 
 import os
 
-app = Flask(__name__, static_folder='build', static_url_path='')
+app = Flask(__name__, static_folder='frontend/build', template_folder='frontend/build')
 
 CORS(app)  # Cross-Origin Resource Sharing ayarları
 
