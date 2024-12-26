@@ -19,14 +19,14 @@ app.register_blueprint(auth_routes)
 app.register_blueprint(admin_routes)
 
 # React yönlendirmelerini desteklemek için catch-all route
-
-@app.route('/')
-def index():
-    return send_from_directory(app.static_folder, 'index.html')
-
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def static_files(path):
-    return send_from_directory(os.path.join(app.static_folder, 'static'), path)
+def serve(path):
+    # Eğer istenen dosya 'build' klasöründe varsa, o dosya sunuluyor
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    # Diğer tüm isteklerde 'index.html' döndürülerek React Router'ın devreye girmesi sağlanıyor
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 

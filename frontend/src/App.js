@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";  // Routes yerine Switch kullanılmaz
+import { HashRouter as Router, Route, Routes } from "react-router-dom";  // HashRouter kullanıyoruz
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";  // Admin sayfası
 import Restoran from "./pages/Restoran";  // Restoran sayfası
@@ -13,7 +13,6 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/restoran" element={<Restoran />} />
                 <Route path="/" element={<Homepage />} /> {/* Login sayfasını varsayılan olarak ayarlıyoruz */}
-
             </Routes>
         </Router>
     );
