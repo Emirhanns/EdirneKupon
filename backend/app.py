@@ -19,10 +19,15 @@ app.register_blueprint(auth_routes)
 app.register_blueprint(admin_routes)
 
 # React yönlendirmelerini desteklemek için catch-all route
+
 @app.route('/')
 @app.route('/<path:path>')
 def serve(path=None):
-    return send_from_directory(app.static_folder, 'index.html')
+    # Eğer dosya mevcut değilse (örn: /admin), index.html'i döndür
+    if not path or not os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, 'index.html')
+    # Aksi halde dosyayı döndür (örn: CSS, JS dosyaları için)
+    return send_from_directory(app.static_folder, path)
 
 app.config['DEBUG'] = False  # Debug özelliğini kapat
 app.config['TESTING'] = False  # Testing özelliğini kapat
