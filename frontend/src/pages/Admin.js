@@ -21,7 +21,7 @@ const Admin = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/get_restoranlar")
+      .get("https://edirnekupon-back.onrender.com/get_restoranlar")
       .then((response) => {
         setRestoranlar(response.data);
       })
