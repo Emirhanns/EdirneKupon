@@ -38,7 +38,7 @@ const Restoran = () => {
 
       try {
         await axios.delete(`https://edirnekupon-back.onrender.com/delete_kupon/${kupon._id}`);
-        setMessage("Kuponunuz geçerli!"); // Geçerli kupon mesajı
+        setMessage(`Kuponunuz geçerli! Kupon: ${kupon.kuponName} - %{kupon.indirimDegeri} indirim`);
         setKuponlar((prevKuponlar) => prevKuponlar.filter((k) => k._id !== kupon._id));
       } catch (err) {
         console.error("Kupon silinirken hata oluştu:", err);
