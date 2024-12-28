@@ -6,6 +6,7 @@ const Restoran = () => {
   const [kuponlar, setKuponlar] = useState([]);
   const [kuponInput, setKuponInput] = useState("");
   const [message, setMessage] = useState(null);
+  const [kuponSelect, setKuponSelect] = useState(""); // Seçilen kupon
   const restoranId = localStorage.getItem("restoranId"); // Giriş yapan kullanıcının restoran ID'si
 
   // Restoran kuponlarını API'den çekme
@@ -27,7 +28,7 @@ const Restoran = () => {
   const handleKuponSubmit = async (e) => {
     e.preventDefault();
   
-    const kupon = kuponlar.find((k) => k.kuponName === kuponInput);
+    const kupon = kuponlar.find((k) => k.kuponName === kuponInput || k.kuponName === kuponSelect);
   
     if (kupon) {
       if (!kupon._id) {
@@ -49,6 +50,7 @@ const Restoran = () => {
     }
   
     setKuponInput(""); // Input alanını temizle
+    setKuponSelect(""); // Dropdown seçim alanını temizle
   };
   
 
@@ -56,15 +58,22 @@ const Restoran = () => {
     <div className="restoran-container">
       <h2 className="restoran-title">Restoran Kuponları</h2>
 
-      <ul className="kupon-list">
-        {kuponlar.map((kupon) => (
-          <li key={kupon.kuponId} className="kupon-item">
-            {kupon.kuponName} - %{kupon.indirimDegeri} indirim
-          </li>
-        ))}
-      </ul>
-
       <form onSubmit={handleKuponSubmit} className="kupon-form">
+        {/* Dropdown listesi */}
+        <select
+          className="kupon-dropdown"
+          value={kuponSelect}
+          onChange={(e) => setKuponSelect(e.target.value)}
+        >
+          <option value="">Kupon seçin</option>
+          {kuponlar.map((kupon) => (
+            <option key={kupon.kuponId} value={kupon.kuponName}>
+              {kupon.kuponName} - %{kupon.indirimDegeri} indirim
+            </option>
+          ))}
+        </select>
+
+        {/* Manuel kupon kodu girişi */}
         <input
           type="text"
           className="kupon-input"
