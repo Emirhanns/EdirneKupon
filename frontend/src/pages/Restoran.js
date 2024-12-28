@@ -26,19 +26,19 @@ const Restoran = () => {
   // Kupon doğrulama ve silme
   const handleKuponSubmit = async (e) => {
     e.preventDefault();
-
+  
     const kupon = kuponlar.find((k) => k.kuponName === kuponInput);
-
+  
     if (kupon) {
       if (!kupon._id) {
         console.error("Kuponun _id'si bulunamadı!");
         setMessage("Kupon doğrulama sırasında hata oluştu.");
         return;
       }
-
+  
       try {
         await axios.delete(`https://edirnekupon-back.onrender.com/delete_kupon/${kupon._id}`);
-        setMessage(`Kuponunuz geçerli! Kupon: ${kupon.kuponName} - %{kupon.indirimDegeri} indirim`);
+        setMessage(`Kuponunuz geçerli! Kupon: ${kupon.kuponName} - %${kupon.indirimDegeri} indirim`);
         setKuponlar((prevKuponlar) => prevKuponlar.filter((k) => k._id !== kupon._id));
       } catch (err) {
         console.error("Kupon silinirken hata oluştu:", err);
@@ -47,9 +47,10 @@ const Restoran = () => {
     } else {
       setMessage("Geçersiz kupon kodu."); // Hatalı kupon mesajı
     }
-
+  
     setKuponInput(""); // Input alanını temizle
   };
+  
 
   return (
     <div className="restoran-container">
